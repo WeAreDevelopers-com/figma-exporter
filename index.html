@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Figma Image Exporter</title>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <img
+        src="https://careers.recruiteecdn.com/image/upload/q_auto,f_auto,w_400,c_limit/production/images/A5xK/fbNWuS0fl4_2.png"
+        width="400"
+        height="214" />
+      <h1>Figma Image Export Tool</h1>
+      <button id="exportButton">Export Images</button>
+      <div id="status"></div>
+    </main>
+
+    <script>
+      document
+        .getElementById("exportButton")
+        .addEventListener("click", async () => {
+          document.getElementById("status").innerText = "Exporting images...";
+
+          try {
+            const response = await fetch("/run-export-script", {
+              method: "POST",
+            });
+            const result = await response.json();
+            document.getElementById("status").innerText = result.message;
+          } catch (error) {
+            document.getElementById("status").innerText =
+              "Error exporting images: " + error.message;
+          }
+        });
+    </script>
+  </body>
+</html>
